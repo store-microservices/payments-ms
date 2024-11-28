@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreatePaymentSessionDto } from './dot/create-payment-session.dto';
+import { Request, Response } from 'express';
 
 @Controller('payments')
 export class PaymentsController {
@@ -12,8 +13,8 @@ export class PaymentsController {
   }
 
   @Post('webhook')
-  async stripeWebhook() {
-    return 'webhook';
+  async stripeWebhook(@Req() req: Request, @Res() res: Response) {
+    return this.paymentsService.stripeWebhook(req, res);
   }
 
   @Get('success')
